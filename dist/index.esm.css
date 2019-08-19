@@ -1,0 +1,98 @@
+
+.zk-modal-warp {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 0;
+        position: absoult;
+}
+.zk-modal-warp .zk-mask {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: #000000;
+        opacity: 0.5;
+        z-index: 0;
+        /* display: none; */
+}
+.zk-modal-warp .zk-modal-content {
+        background-color: #ffffff;
+        /* background-color: rebeccapurple; */
+        position: fixed;
+}
+.zk-modal-warp .zk-modal-center {
+        width: 800px;
+        height: 400px;
+        -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+}
+.zk-modal-warp .zk-modal-right {
+        width: 50%;
+        height: 100%;
+        right: 0;
+        top: 0;
+}
+/* 从底部弹出动画 */
+.zk-modal-warp .zk-modal-b-c-enter,
+    .zk-modal-warp .zk-modal-b-c-leave-to {
+        -webkit-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+                transform: translate(-50%, 0);
+        left: 50%;
+        top: 100%;
+}
+.zk-modal-warp .zk-modal-b-c-enter-active,
+    .zk-modal-warp .zk-modal-b-c-leave-active {
+        -webkit-transition: all 0.7s ease-in-out;
+        transition: all 0.7s ease-in-out;
+}
+/* 从右侧弹出动画 */
+.zk-modal-warp .zk-modal-r-enter,
+    .zk-modal-warp .zk-modal-r-leave-to {
+        right: -100%;
+        top: 0;
+}
+.zk-modal-warp .zk-modal-r-enter-active,
+    .zk-modal-warp .zk-modal-r-leave-active {
+        -webkit-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+}
+/* 遮罩层动画 */
+.zk-modal-warp .zk-mask-enter,
+    .zk-modal-warp .zk-mask-leave-to {
+        opacity: 0;
+}
+.zk-modal-warp .zk-mask-enter-active,
+    .zk-modal-warp .zk-mask-leave-active {
+        -webkit-transition: opacity 0.5s ease-in-out;
+        transition: opacity 0.5s ease-in-out;
+}
+.zkmodal-mask {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #000000;
+    opacity: 0.5;
+    z-index: 0;
+    display: none;
+}
+
+
+.page-template {
+    width: 800px;
+    height: 450px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.page-template [actual-component]{
+        width: 100%;
+        height: 100%;
+}

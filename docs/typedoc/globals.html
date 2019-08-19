@@ -2424,6 +2424,8 @@ img {
 				<h4>JavaScript</h4>
 			</a>
 			<pre><code class="language-javascript"><span class="hljs-keyword">const</span> Layer = ZKeyWebappLayer.Layer;
+<span class="hljs-comment">// 注册插件</span>
+Vue.use(Layer);
 <span class="hljs-comment">// 1. 定义组件</span>
 <span class="hljs-keyword">const</span> 需要弹出的组件 = { <span class="hljs-attr">template</span>:<span class="hljs-string">'&lt;div style="background-color: rebeccapurple"&gt;需要弹出的组件&lt;/div&gt;'</span> };
 <span class="hljs-comment">// 2. 使用</span>
@@ -2456,6 +2458,8 @@ img {
 			</a>
 			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">'vue'</span>;
 <span class="hljs-keyword">import</span> { Layer } <span class="hljs-keyword">from</span> <span class="hljs-string">'@zkey-webapp/layer'</span>;
+<span class="hljs-comment">// 注册插件</span>
+Vue.use(Layer);
 <span class="hljs-keyword">import</span> App <span class="hljs-keyword">from</span> <span class="hljs-string">'./App.vue'</span>;
 <span class="hljs-keyword">new</span> Vue(App).$mount(<span class="hljs-string">'#app'</span>);</code></pre>
 			<a href="#使用自定义弹窗效果" id="使用自定义弹窗效果" style="color: inherit; text-decoration: none;">
@@ -2603,6 +2607,44 @@ img {
                 <span class="hljs-attr">type</span>: LayerType.Custom,
                 <span class="hljs-attr">hasMask</span>: <span class="hljs-literal">false</span>,
                 <span class="hljs-attr">templateComponent</span>: 模板组件
+            });
+            <span class="hljs-comment">// 监听业务组件或者模板组件事件</span>
+            layer.on(<span class="hljs-string">'custom-event'</span>, val =&gt; {
+                <span class="hljs-built_in">console</span>.log(val);
+            });
+        }
+    }
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+			<a href="#使用路径弹出组件或者页面" id="使用路径弹出组件或者页面" style="color: inherit; text-decoration: none;">
+				<h2>使用路径弹出组件或者页面</h2>
+			</a>
+			<blockquote>
+				<p>支持通过Url加载相应的页面和vue页面组件</p>
+			</blockquote>
+			<a href="#javascript-2" id="javascript-2" style="color: inherit; text-decoration: none;">
+				<h4>JavaScript</h4>
+			</a>
+			<pre><code class="language-javascript"><span class="hljs-comment">// 使用前</span>
+<span class="hljs-comment">// 已配置好的vue单页路由</span>
+<span class="hljs-keyword">const</span> routes = [{ 
+    <span class="hljs-attr">path</span>: <span class="hljs-string">'/foo'</span>, 
+    <span class="hljs-attr">component</span>: 业务组件 
+}];
+<span class="hljs-comment">// 注册插件</span>
+Vue.use(Layer, { routes });</code></pre>
+			<a href="#调用组件vue-1" id="调用组件vue-1" style="color: inherit; text-decoration: none;">
+				<h4>调用组件.vue</h4>
+			</a>
+			<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-keyword">import</span> { Layer,LayerType } <span class="hljs-keyword">from</span> <span class="hljs-string">'@zkey-webapp/layer'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+    <span class="hljs-attr">methods</span>:{
+        customPopup() {
+            <span class="hljs-comment">// 创建弹窗并显示 业务组件或者要加载的路径入'/path1/path2'或者'http://www'</span>
+            <span class="hljs-keyword">let</span> layer = Layer.create(<span class="hljs-string">'https://www.baidu.com'</span>, {
+                <span class="hljs-attr">a4</span>: <span class="hljs-string">'传入业务组件参数1'</span>
             });
             <span class="hljs-comment">// 监听业务组件或者模板组件事件</span>
             layer.on(<span class="hljs-string">'custom-event'</span>, val =&gt; {
