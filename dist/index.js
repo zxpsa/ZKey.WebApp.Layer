@@ -178,7 +178,7 @@ var ZKeyWebappLayer = (function (exports, Vue) {
       }
     }
 
-    var css = "\n.zk-modal-warp {\n        left: 0;\n        top: 0;\n        width: 100%;\n        height: 0;\n        position: absoult;\n}\n.zk-modal-warp .zk-mask {\n        width: 100%;\n        height: 100%;\n        position: absolute;\n        left: 0;\n        top: 0;\n        background-color: #000000;\n        opacity: 0.5;\n        z-index: 0;\n        /* display: none; */\n}\n.zk-modal-warp .zk-modal-content {\n        background-color: #ffffff;\n        /* background-color: rebeccapurple; */\n        position: fixed;\n}\n.zk-modal-warp .zk-modal-center {\n        width: 800px;\n        height: 400px;\n        -webkit-transform: translate(-50%, -50%);\n            -ms-transform: translate(-50%, -50%);\n                transform: translate(-50%, -50%);\n        left: 50%;\n        top: 50%;\n}\n.zk-modal-warp .zk-modal-right {\n        width: 50%;\n        height: 100%;\n        right: 0;\n        top: 0;\n}\n/* 从底部弹出动画 */\n.zk-modal-warp .zk-modal-b-c-enter,\n    .zk-modal-warp .zk-modal-b-c-leave-to {\n        -webkit-transform: translate(-50%, 0);\n            -ms-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        left: 50%;\n        top: 100%;\n}\n.zk-modal-warp .zk-modal-b-c-enter-active,\n    .zk-modal-warp .zk-modal-b-c-leave-active {\n        -webkit-transition: all 0.7s ease-in-out;\n        transition: all 0.7s ease-in-out;\n}\n/* 从右侧弹出动画 */\n.zk-modal-warp .zk-modal-r-enter,\n    .zk-modal-warp .zk-modal-r-leave-to {\n        right: -100%;\n        top: 0;\n}\n.zk-modal-warp .zk-modal-r-enter-active,\n    .zk-modal-warp .zk-modal-r-leave-active {\n        -webkit-transition: all 0.5s ease-in-out;\n        transition: all 0.5s ease-in-out;\n}\n/* 遮罩层动画 */\n.zk-modal-warp .zk-mask-enter,\n    .zk-modal-warp .zk-mask-leave-to {\n        opacity: 0;\n}\n.zk-modal-warp .zk-mask-enter-active,\n    .zk-modal-warp .zk-mask-leave-active {\n        -webkit-transition: opacity 0.5s ease-in-out;\n        transition: opacity 0.5s ease-in-out;\n}\n.zkmodal-mask {\n    width: 100%;\n    height: 100%;\n    position: fixed;\n    left: 0;\n    top: 0;\n    background-color: #000000;\n    opacity: 0.5;\n    z-index: 0;\n    display: none;\n}\n";
+    var css = "\n.zk-modal-warp {\n        left: 0;\n        top: 0;\n        width: 100%;\n        height: 0;\n        position: absoult;\n}\n.zk-modal-warp .zk-mask {\n        width: 100%;\n        height: 100%;\n        position: absolute;\n        left: 0;\n        top: 0;\n        background-color: #000000;\n        opacity: 0.5;\n        z-index: 0;\n        /* display: none; */\n}\n.zk-modal-warp .zk-modal-content {\n        background-color: #ffffff;\n        /* background-color: rebeccapurple; */\n        position: fixed;\n}\n.zk-modal-warp .zk-modal-center {\n        width: 800px;\n        height: 400px;\n        -webkit-transform: translate(-50%, -50%);\n            -ms-transform: translate(-50%, -50%);\n                transform: translate(-50%, -50%);\n        left: 50%;\n        top: 50%;\n}\n.zk-modal-warp .zk-modal-right {\n        width: 50%;\n        height: 100%;\n        right: 0;\n        top: 0;\n}\n/* 从底部弹出动画 */\n.zk-modal-warp .zk-modal-b-c-enter,\n    .zk-modal-warp .zk-modal-b-c-leave-to {\n        -webkit-transform: translate(-50%, 0);\n            -ms-transform: translate(-50%, 0);\n                transform: translate(-50%, 0);\n        left: 50%;\n        top: 100%;\n}\n.zk-modal-warp .zk-modal-b-c-enter-active,\n    .zk-modal-warp .zk-modal-b-c-leave-active {\n        -webkit-transition: all 0.7s ease-in-out;\n        transition: all 0.7s ease-in-out;\n}\n/* 从右侧弹出动画 */\n.zk-modal-warp .zk-modal-r-enter,\n    .zk-modal-warp .zk-modal-r-leave-to {\n        right: -100%;\n        top: 0;\n}\n.zk-modal-warp .zk-modal-r-enter-active,\n    .zk-modal-warp .zk-modal-r-leave-active {\n        -webkit-transition: all 0.5s ease-in-out;\n        transition: all 0.5s ease-in-out;\n}\n/* 遮罩层动画 */\n.zk-modal-warp .zk-mask-enter,\n    .zk-modal-warp .zk-mask-leave-to {\n        opacity: 0;\n}\n.zk-modal-warp .zk-mask-enter-active,\n    .zk-modal-warp .zk-mask-leave-active {\n        -webkit-transition: opacity 0.5s ease-in-out;\n        transition: opacity 0.5s ease-in-out;\n}\n";
     styleInject(css);
 
     function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
@@ -420,12 +420,17 @@ var ZKeyWebappLayer = (function (exports, Vue) {
         undefined
       );
 
+    var css$2 = "/**\n * ================================\n * 模态弹窗样式\n * ================================\n */\n .zk-layer-mask {\n    width: 100%;\n    height: 100%;\n    position: fixed;\n    left: 0;\n    top: 0;\n    background-color: #000000;\n    opacity: 0.5;\n    z-index: 0;\n    display: none;\n}\n @-webkit-keyframes zk-layer-mask-ani-show{\n        0% {\n            opacity: 0;\n        }\n\n        100% {\n            opacity: 0.5;\n        }\n    }\n @keyframes zk-layer-mask-ani-show{\n        0% {\n            opacity: 0;\n        }\n\n        100% {\n            opacity: 0.5;\n        }\n    }\n @-webkit-keyframes zk-layer-mask-ani-hide{\n        0% {\n            opacity: 0.5;\n        }\n\n        100% {\n            opacity: 0;\n        }\n    }\n @keyframes zk-layer-mask-ani-hide{\n        0% {\n            opacity: 0.5;\n        }\n\n        100% {\n            opacity: 0;\n        }\n    }\n .zk-layer-mask-show{\n        opacity: 0.5;\n        -webkit-animation: zk-layer-mask-ani-show 1s;\n                animation: zk-layer-mask-ani-show 1s;\n    }\n .zk-layer-mask-hide{\n        opacity: 0;\n        -webkit-animation: zk-layer-mask-ani-hide 1s;\n                animation: zk-layer-mask-ani-hide 1s;\n    }\n";
+    styleInject(css$2);
+
     var ModalStatus;
     (function (ModalStatus) {
-        ModalStatus[ModalStatus["WaitShow"] = 0] = "WaitShow";
-        ModalStatus[ModalStatus["Showing"] = 1] = "Showing";
-        ModalStatus[ModalStatus["WaitHide"] = 2] = "WaitHide";
-        ModalStatus[ModalStatus["Hideing"] = 3] = "Hideing";
+        ModalStatus[ModalStatus["WaitDestroy"] = 0] = "WaitDestroy";
+        ModalStatus[ModalStatus["Readying"] = 1] = "Readying";
+        ModalStatus[ModalStatus["WaitShow"] = 2] = "WaitShow";
+        ModalStatus[ModalStatus["Showing"] = 3] = "Showing";
+        ModalStatus[ModalStatus["WaitHide"] = 4] = "WaitHide";
+        ModalStatus[ModalStatus["Hideing"] = 5] = "Hideing";
     })(ModalStatus || (ModalStatus = {}));
     var ActualComponentOpt = Vue.extend({
         name: 'ActualComponent',
@@ -466,7 +471,9 @@ var ZKeyWebappLayer = (function (exports, Vue) {
             var zkLayers = modalState.zkLayers;
             var arr = [
                 h('div', {
-                    'class': 'zkmodal-mask'
+                    attrs: {
+                        id: 'zk-layer-mask'
+                    }
                 })
             ];
             zkLayers.forEach(function (item) {
@@ -487,9 +494,8 @@ var ZKeyWebappLayer = (function (exports, Vue) {
         function Layer(component, options) {
             this.params = {};
             this.listeners = {};
-            this.waitDestroy = false;
             this.readingFuncs = [];
-            this._status = ModalStatus.WaitShow;
+            this.status = ModalStatus.Readying;
             this.code = Layer.getCode();
             this.component = component;
             if (!options)
@@ -499,7 +505,7 @@ var ZKeyWebappLayer = (function (exports, Vue) {
             this._createComponent();
         }
         Layer.prototype.reusing = function (component, options) {
-            this.waitDestroy = false;
+            this.status = ModalStatus.Readying;
             if (!options)
                 options = {};
             var opt = Object.assign(Layer.getDefaultConfig(), options);
@@ -520,24 +526,35 @@ var ZKeyWebappLayer = (function (exports, Vue) {
         };
         Layer.prototype.show = function (params) {
             return __awaiter(this, void 0, Promise, function () {
+                var error_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            if (this._status != ModalStatus.WaitShow)
+                            if (this.status == ModalStatus.Showing)
                                 return [2];
-                            this._status = ModalStatus.Showing;
+                            this.status = ModalStatus.Showing;
                             this.params = params;
                             this.zIndex = Layer.getZIndex();
-                            return [4, this.ready()];
-                        case 1:
-                            _a.sent();
-                            return [4, this.touchHook('layerShow')];
-                        case 2:
-                            _a.sent();
                             if (this.options.hasMask) {
                                 Mask.getInstance().show(this);
                             }
-                            this._status = ModalStatus.WaitHide;
+                            return [4, this.ready()];
+                        case 1:
+                            _a.sent();
+                            _a.label = 2;
+                        case 2:
+                            _a.trys.push([2, 4, , 5]);
+                            return [4, this.touchHook('layerShow')];
+                        case 3:
+                            _a.sent();
+                            return [3, 5];
+                        case 4:
+                            error_1 = _a.sent();
+                            Mask.getInstance().hide(this);
+                            this.status = ModalStatus.WaitShow;
+                            throw error_1;
+                        case 5:
+                            this.status = ModalStatus.WaitHide;
                             return [2, this];
                     }
                 });
@@ -548,16 +565,15 @@ var ZKeyWebappLayer = (function (exports, Vue) {
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            if (this._status != ModalStatus.WaitHide)
+                            if (this.status != ModalStatus.WaitHide)
                                 return [2];
-                            this.readyed = false;
+                            this.status = ModalStatus.Hideing;
+                            Mask.getInstance().hide(this);
                             return [4, this.touchHook('beforeLayerHide')];
                         case 1:
                             _a.sent();
                             this.component = null;
-                            this._status = ModalStatus.WaitShow;
-                            this.waitDestroy = true;
-                            Mask.getInstance().hide(this);
+                            this.status = ModalStatus.WaitDestroy;
                             return [2];
                     }
                 });
@@ -727,7 +743,8 @@ var ZKeyWebappLayer = (function (exports, Vue) {
         Layer.create = function (component, params, options) {
             if (typeof component == 'string') {
                 if (component.indexOf('/') == 0) {
-                    options.templateComponent = PageTemplate;
+                    if (!options.templateComponent)
+                        options.templateComponent = PageTemplate;
                     var hasCompt = false;
                     for (var _i = 0, _a = Layer.routes; _i < _a.length; _i++) {
                         var item = _a[_i];
@@ -746,14 +763,15 @@ var ZKeyWebappLayer = (function (exports, Vue) {
                         }
                     }
                 }
-                else if (component.indexOf('http') == 0) {
-                    options.templateComponent = PageTemplate;
+                else if (component.indexOf('http://') == 0 || component.indexOf('https://') == 0) {
+                    if (!options.templateComponent)
+                        options.templateComponent = PageTemplate;
                 }
             }
             var modal;
             for (var _b = 0, _c = modalState.zkLayers; _b < _c.length; _b++) {
                 var item = _c[_b];
-                if (item.waitDestroy) {
+                if (item.status == ModalStatus.WaitDestroy) {
                     if (options && options.templateComponent) {
                         if (item.options.templateComponent == options.templateComponent) {
                             modal = item;
@@ -798,7 +816,7 @@ var ZKeyWebappLayer = (function (exports, Vue) {
         Layer.prototype.ready = function (func) {
             var _this = this;
             return new Promise(function (resolve, reject) {
-                if (_this.readyed) {
+                if (_this.status != ModalStatus.WaitDestroy && _this.status != ModalStatus.Readying) {
                     func && func();
                     resolve();
                 }
@@ -811,7 +829,7 @@ var ZKeyWebappLayer = (function (exports, Vue) {
             });
         };
         Layer.prototype.setReadyed = function () {
-            this.readyed = true;
+            this.status = ModalStatus.WaitShow;
             this.readingFuncs.forEach(function (func) { return func(); });
             this.readingFuncs = [];
         };
@@ -821,21 +839,24 @@ var ZKeyWebappLayer = (function (exports, Vue) {
     }());
     var Mask = (function () {
         function Mask() {
-            this.dom = document.querySelector('.zkmodal-mask');
+            this.dom = document.querySelector('#zk-layer-mask');
         }
         Mask.prototype.show = function (modal) {
             this.dom.style.zIndex = '' + (modal.zIndex - 1);
+            this.dom.className = 'zk-layer-mask zk-layer-mask-show';
             this.dom.style.display = 'block';
-            this.dom.onclick = function () {
-                modal.hide();
-            };
+            if (modal.options.maskClose) {
+                this.dom.onclick = function () {
+                    modal.hide();
+                };
+            }
         };
         Mask.prototype.hide = function (modal) {
-            if (!modal.options.maskClose)
-                return;
+            var _this = this;
             var topNeedMaskModal;
-            modalState.zkLayers.forEach(function (item) {
-                if (modal != item && !item.waitDestroy && item.options.hasMask) {
+            var zkLayers = modalState.zkLayers;
+            zkLayers.forEach(function (item) {
+                if (modal != item && item.status == ModalStatus.WaitHide && item.options.hasMask) {
                     if (!topNeedMaskModal) {
                         topNeedMaskModal = item;
                     }
@@ -848,12 +869,17 @@ var ZKeyWebappLayer = (function (exports, Vue) {
             });
             if (topNeedMaskModal) {
                 this.dom.style.zIndex = '' + (topNeedMaskModal.zIndex - 1);
-                this.dom.onclick = function () {
-                    topNeedMaskModal.hide();
-                };
+                if (modal.options.maskClose) {
+                    this.dom.onclick = function () {
+                        topNeedMaskModal.hide();
+                    };
+                }
             }
             else {
-                this.dom.style.display = 'none';
+                this.dom.className = 'zk-layer-mask zk-layer-mask-hide';
+                setTimeout(function () {
+                    _this.dom.style.display = 'none';
+                }, 900);
             }
         };
         Mask.getInstance = function () {

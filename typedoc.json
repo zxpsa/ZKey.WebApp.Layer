@@ -1,0 +1,13 @@
+{
+    "name": "@zkey-webapp/layer",
+    "out": "./docs/typedoc",
+    "jsx": true,
+    "excludeNotExported": true,
+    "theme": "minimal",
+    "mode": "file",
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "exclude": "**/node_modules/**",
+    "hideGenerator":true,
+    "target":"ES6"
+}

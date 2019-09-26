@@ -1,0 +1,66 @@
+{
+    "name": "@zkey-webapp/layer",
+    "version": "0.0.4",
+    "description": "一个基于 vue 的基础弹窗，无需为每一个弹窗声明挂载点",
+    "main": "dist/index.min.js",
+    "module": "dist/index.esm.js",
+    "types": "src/Index.ts",
+    "scripts": {
+        "build": "rollup --config rollup.config.js",
+        "start": "rollup -w --config rollup.server.js",
+        "start1": "npm run build:esm&&rollup -w --config rollup.server.js",
+        "build:ts": "tsc --build tsconfig.json",
+        "build:doc": "typedoc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/zxpsa/ZKey.WebApp.Layer.git"
+    },
+    "keywords": [
+        "纯 js 声明式弹窗",
+        "Vue",
+        "无需声明每个弹窗占位标签"
+    ],
+    "author": "PS",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/zxpsa/ZKey.WebApp.Layer/issues"
+    },
+    "homepage": "https://github.com/zxpsa/ZKey.WebApp.Layer#readme",
+    "devDependencies": {
+        "@types/node": "^11.13.4",
+        "chai": "^4.2.0",
+        "cssnano": "^4.1.10",
+        "element-ui": "^2.11.1",
+        "is-mergeable-object": "^1.1.1",
+        "postcss-nested": "^4.1.2",
+        "postcss-preset-env": "^6.7.0",
+        "postcss-simple-vars": "^5.0.2",
+        "rollup": "^1.11.3",
+        "rollup-plugin-commonjs": "^9.3.4",
+        "rollup-plugin-copy": "^2.0.1",
+        "rollup-plugin-node-resolve": "^4.2.3",
+        "rollup-plugin-postcss": "^2.0.3",
+        "rollup-plugin-replace": "^2.2.0",
+        "rollup-plugin-serve": "^1.0.1",
+        "rollup-plugin-terser": "^5.1.1",
+        "rollup-plugin-typescript": "^1.0.1",
+        "rollup-plugin-vue": "^5.0.0",
+        "tslib": "^1.9.3",
+        "typedoc": "^0.15.0",
+        "typescript": "^3.4.1",
+        "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "vue": "^2.6.10"
+    },
+    "files": [
+        "dist/*.js",
+        "types/*.d.ts"
+    ],
+    "browserslist": [
+        "last 2 versions",
+        "ie >= 8",
+        "Android >= 4.4"
+    ]
+}

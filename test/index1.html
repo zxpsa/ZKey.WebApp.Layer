@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- <script src="./../dist/index.js"></script> -->
+    <script src="https://unpkg.com/@zkey-webapp/layer/dist/index.min.js"></script>
+
+    <div id="app">
+         <!-- 弹窗将渲染在这里 -->
+        <zk-layer></zk-layer>
+    </div>
+</body>
+<script>
+    const Layer = ZKeyWebappLayer.Layer;
+    // 0. 注册插件
+    Vue.use(Layer);
+    // 1. 定义组件
+    const 需要弹出的组件 = {template:'<div style="background-color: rebeccapurple">需要弹出的组件</div>'};
+    // 2. 使用
+    new Vue({
+        el: '#app',
+        created() {
+            Layer.create(需要弹出的组件, {
+                a4: '普通 string',
+                func: function (param) {
+                    console.log(param);
+                }
+            });
+        }
+    });
+</script>
+
+</html>

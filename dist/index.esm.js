@@ -333,10 +333,12 @@ __vue_render__$1._withStripped = true;
 
 var ModalStatus;
 (function (ModalStatus) {
-    ModalStatus[ModalStatus["WaitShow"] = 0] = "WaitShow";
-    ModalStatus[ModalStatus["Showing"] = 1] = "Showing";
-    ModalStatus[ModalStatus["WaitHide"] = 2] = "WaitHide";
-    ModalStatus[ModalStatus["Hideing"] = 3] = "Hideing";
+    ModalStatus[ModalStatus["WaitDestroy"] = 0] = "WaitDestroy";
+    ModalStatus[ModalStatus["Readying"] = 1] = "Readying";
+    ModalStatus[ModalStatus["WaitShow"] = 2] = "WaitShow";
+    ModalStatus[ModalStatus["Showing"] = 3] = "Showing";
+    ModalStatus[ModalStatus["WaitHide"] = 4] = "WaitHide";
+    ModalStatus[ModalStatus["Hideing"] = 5] = "Hideing";
 })(ModalStatus || (ModalStatus = {}));
 const ActualComponentOpt = Vue.extend({
     name: 'ActualComponent',
@@ -377,7 +379,9 @@ const ZkLayer = Vue.extend({
         let zkLayers = modalState.zkLayers;
         let arr = [
             h('div', {
-                'class': 'zkmodal-mask'
+                attrs: {
+                    id: 'zk-layer-mask'
+                }
             })
         ];
         zkLayers.forEach(item => {
@@ -398,9 +402,8 @@ class Layer {
     constructor(component, options) {
         this.params = {};
         this.listeners = {};
-        this.waitDestroy = false;
         this.readingFuncs = [];
-        this._status = ModalStatus.WaitShow;
+        this.status = ModalStatus.Readying;
         this.code = Layer.getCode();
         this.component = component;
         if (!options)
@@ -410,7 +413,7 @@ class Layer {
         this._createComponent();
     }
     reusing(component, options) {
-        this.waitDestroy = false;
+        this.status = ModalStatus.Readying;
         if (!options)
             options = {};
         let opt = Object.assign(Layer.getDefaultConfig(), options);
@@ -430,28 +433,34 @@ class Layer {
         modalState.zkLayers.push(this);
     }
     async show(params) {
-        if (this._status != ModalStatus.WaitShow)
+        if (this.status == ModalStatus.Showing)
             return;
-        this._status = ModalStatus.Showing;
+        this.status = ModalStatus.Showing;
         this.params = params;
         this.zIndex = Layer.getZIndex();
-        await this.ready();
-        await this.touchHook('layerShow');
         if (this.options.hasMask) {
             Mask.getInstance().show(this);
         }
-        this._status = ModalStatus.WaitHide;
+        await this.ready();
+        try {
+            await this.touchHook('layerShow');
+        }
+        catch (error) {
+            Mask.getInstance().hide(this);
+            this.status = ModalStatus.WaitShow;
+            throw error;
+        }
+        this.status = ModalStatus.WaitHide;
         return this;
     }
     async hide() {
-        if (this._status != ModalStatus.WaitHide)
+        if (this.status != ModalStatus.WaitHide)
             return;
-        this.readyed = false;
+        this.status = ModalStatus.Hideing;
+        Mask.getInstance().hide(this);
         await this.touchHook('beforeLayerHide');
         this.component = null;
-        this._status = ModalStatus.WaitShow;
-        this.waitDestroy = true;
-        Mask.getInstance().hide(this);
+        this.status = ModalStatus.WaitDestroy;
     }
     async touchHook(name) {
         const cOpt = this._componentInstance ? this._componentInstance.$options : null;
@@ -571,7 +580,8 @@ class Layer {
     static create(component, params, options) {
         if (typeof component == 'string') {
             if (component.indexOf('/') == 0) {
-                options.templateComponent = PageTemplate;
+                if (!options.templateComponent)
+                    options.templateComponent = PageTemplate;
                 let hasCompt = false;
                 for (const item of Layer.routes) {
                     if (item.path == component) {
@@ -589,13 +599,14 @@ class Layer {
                     }
                 }
             }
-            else if (component.indexOf('http') == 0) {
-                options.templateComponent = PageTemplate;
+            else if (component.indexOf('http://') == 0 || component.indexOf('https://') == 0) {
+                if (!options.templateComponent)
+                    options.templateComponent = PageTemplate;
             }
         }
         let modal;
         for (const item of modalState.zkLayers) {
-            if (item.waitDestroy) {
+            if (item.status == ModalStatus.WaitDestroy) {
                 if (options && options.templateComponent) {
                     if (item.options.templateComponent == options.templateComponent) {
                         modal = item;
@@ -639,7 +650,7 @@ class Layer {
     }
     ready(func) {
         return new Promise((resolve, reject) => {
-            if (this.readyed) {
+            if (this.status != ModalStatus.WaitDestroy && this.status != ModalStatus.Readying) {
                 func && func();
                 resolve();
             }
@@ -652,7 +663,7 @@ class Layer {
         });
     }
     setReadyed() {
-        this.readyed = true;
+        this.status = ModalStatus.WaitShow;
         this.readingFuncs.forEach(func => func());
         this.readingFuncs = [];
     }
@@ -661,21 +672,23 @@ Layer.code = 0;
 Layer.zIndex = 0;
 class Mask {
     constructor() {
-        this.dom = document.querySelector('.zkmodal-mask');
+        this.dom = document.querySelector('#zk-layer-mask');
     }
     show(modal) {
         this.dom.style.zIndex = '' + (modal.zIndex - 1);
+        this.dom.className = 'zk-layer-mask zk-layer-mask-show';
         this.dom.style.display = 'block';
-        this.dom.onclick = () => {
-            modal.hide();
-        };
+        if (modal.options.maskClose) {
+            this.dom.onclick = () => {
+                modal.hide();
+            };
+        }
     }
     hide(modal) {
-        if (!modal.options.maskClose)
-            return;
         let topNeedMaskModal;
-        modalState.zkLayers.forEach(item => {
-            if (modal != item && !item.waitDestroy && item.options.hasMask) {
+        let zkLayers = modalState.zkLayers;
+        zkLayers.forEach(item => {
+            if (modal != item && item.status == ModalStatus.WaitHide && item.options.hasMask) {
                 if (!topNeedMaskModal) {
                     topNeedMaskModal = item;
                 }
@@ -688,12 +701,17 @@ class Mask {
         });
         if (topNeedMaskModal) {
             this.dom.style.zIndex = '' + (topNeedMaskModal.zIndex - 1);
-            this.dom.onclick = () => {
-                topNeedMaskModal.hide();
-            };
+            if (modal.options.maskClose) {
+                this.dom.onclick = () => {
+                    topNeedMaskModal.hide();
+                };
+            }
         }
         else {
-            this.dom.style.display = 'none';
+            this.dom.className = 'zk-layer-mask zk-layer-mask-hide';
+            setTimeout(() => {
+                this.dom.style.display = 'none';
+            }, 900);
         }
     }
     static getInstance() {
